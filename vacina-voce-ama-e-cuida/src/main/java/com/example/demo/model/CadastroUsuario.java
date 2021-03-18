@@ -1,15 +1,14 @@
 package com.example.demo.model;
 
 import java.util.Date;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
+import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity 
@@ -17,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class CadastroUsuario {	
 
 	@Id	
+	@CPF
+	@Column(unique = true)
 	@NotBlank(message = "Campo obrigatório!")	
 	private String cpf;
 	
@@ -24,19 +25,15 @@ public class CadastroUsuario {
 	private String nome;
 	
 	@Email
+	@Column(unique = true)
 	@NotBlank(message = "Campo obrigatório!")
 	private String email;	
 	
 	@JsonFormat(pattern =  "dd/mm/yyyy")
 	private Date nascimento;
 	
-	
-
 	@ManyToOne	
 	private CadastroAplicacaoVacina vacina;
-	
-
-
 	
 	public String getCpf() {return cpf;}
 	public void setCpf(String cpf) {this.cpf = cpf;}
@@ -45,6 +42,6 @@ public class CadastroUsuario {
 	public String getEmail() {return email;}
 	public void setEmail(String email) {this.email = email;}	
 	public Date getNascimento() {return nascimento;}
-	public void setNascimento(Date nascimento) {this.nascimento = nascimento;}
+	public void setNascimento(Date nascimento) {this.nascimento = nascimento;}	
+}	
 	
-}

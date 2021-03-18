@@ -6,6 +6,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,7 @@ import com.example.demo.model.CadastroUsuario;
 import com.example.demo.repository.CadastroUsuarioRepository;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/cadastros")
 public class CadastroUsuarioController {
 	
@@ -52,6 +55,11 @@ public class CadastroUsuarioController {
 		return ResponseEntity.status(HttpStatus.OK).body(atualizar);
 	}
 	
-	
-
+	//deletar o cadastro de usuario 
+	@DeleteMapping("/{cpf}")
+	public ResponseEntity<CadastroUsuario> deletaCadastro(@PathVariable @RequestBody String cpf) {
+		if(cpf == null) {return ResponseEntity.badRequest().build();
+		} usuariorepository.deleteById(cpf);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
 }
